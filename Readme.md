@@ -132,7 +132,20 @@ char *getcwd(char *buf, size_t size);
 
 #### sleep( )
 
+```
+// kernal/sys.c
+unsigned int sys_sleep(unsigned int seconds)
+{
+	sys_signal(14, SIG_IGN, NULL);
+	sys_alarm(seconds);
+	sys_pause();
+	return 0;
+}
+```
 
+14 是SIGALARM
+
+SIG_IGN表示忽略
 
 #### getcwd( )
 
