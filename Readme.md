@@ -350,3 +350,9 @@ dcatch.o: dcatch.c ../include/string.h ../include/linux/fs.h\
 
 修改引用C文件为\#include "../mm/memory.c"
 
+解决办法：把依赖里的memory.c再删掉就ok了
+
+fs/fs.o：在函数‘sys_getcwd’中：
+(.text+0x8245)：对‘put_fs_byte’未定义的引用
+
+明天再解决吧
