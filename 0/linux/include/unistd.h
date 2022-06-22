@@ -271,6 +271,12 @@ int dup2(int oldfd, int newfd);
 int getppid(void);
 pid_t getpgrp(void);
 pid_t setsid(void);
+unsigned int sleep(unsigned int seconds);
+int execve2(const char *path, char * argv[], char * envp[]);
+int getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count);
+long getcwd(char * buf, size_t size);
+int hopeace();
+
 
 #define __always_inline inline __attribute__((always_inline))
 

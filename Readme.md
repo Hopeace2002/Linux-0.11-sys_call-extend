@@ -157,7 +157,71 @@ SIG_IGN表示忽略
 
 ++++
 
+添加系统调用号：
+
+```c
+// include/unistd.h
+
+#define __NR_execve2 87
+#define __NR_getdents 88
+#define __NR_hopeace 89
+#define __NR_sleep 90
+#define __NR_getcwd 91
+
+unsigned int sleep(unsigned int seconds);
+int execve2(const char *path, char * argv[], char * envp[]);
+int getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count);
+long getcwd(char * buf, size_t size);
+int hopeace();
+```
 
 
 
+添加系统调用表
+
+```C
+// include/linux/sys.h
+unsigned int sleep(unsigned int seconds);
+int execve2(const char *path, char * argv[], char * envp[]);
+int getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count);
+long getcwd(char * buf, size_t size);
+int hopeace();
+
+sys_call_table[] => 加上sys_execve2, sys_getdents, sys_hopeace, sys_sleep, sys_getcwd
+    
+```
+
+添加函数具体实现（这里只有sys_sleep 实现）
+
+```c
+// kernel/sys.c
+
+unsigned int sys_sleep(unsigned int seconds)
+{
+	sys_signal(14, SIG_IGN, NULL);
+	sys_alarm(seconds);
+	sys_pause();
+	return 0;
+}
+
+int sys_execve2(const char *path, char * argv[], char * envp[])
+{
+	return 0;
+}
+
+int sys_getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count)
+{
+	return 0;
+}
+
+long sys_getcwd(char * buf, size_t size)
+{
+	return 0;
+}
+
+int  sys_hopeace()
+{
+	return 0;
+}
+```
 
