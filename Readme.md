@@ -356,3 +356,22 @@ fs/fs.o：在函数‘sys_getcwd’中：
 (.text+0x8245)：对‘put_fs_byte’未定义的引用
 
 明天再解决吧
+
+dcatch 添加引用
+
+\#include <asm/segment.h>
+
+事实证明
+
+\#include "../mm/memory.c"会出现重复定义的问题
+
+去找那些定义在.h中的带有extern的函数
+
+```C
+#include <string.h>
+#include <linux/mm.h>
+#include <linux/fs.h>
+#include <asm/segment.h>
+#include "linux/sched.h"
+```
+
