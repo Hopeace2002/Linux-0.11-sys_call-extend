@@ -12,7 +12,6 @@
 #include <asm/segment.h>
 #include <sys/times.h>
 #include <sys/utsname.h>
-
 int sys_ftime()
 {
 	return -ENOSYS;
@@ -126,22 +125,19 @@ unsigned int sys_sleep(unsigned int seconds)
 	return 0;
 }
 
-int execve2(const char *path, char * argv[], char * envp[])
+int sys_execve2(const char *path, char * argv[], char * envp[])
 {
 	return 0;
 }
 
-int getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count)
+int sys_getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count)
 {
 	return 0;
 }
 
-long getcwd(char * buf, size_t size)
-{
-	return 0;
-}
 
-int  hopeace()
+
+int  sys_hopeace()
 {
 	return 0;
 }
