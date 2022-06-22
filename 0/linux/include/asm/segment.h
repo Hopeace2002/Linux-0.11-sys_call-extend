@@ -37,7 +37,7 @@ static inline void put_fs_long(unsigned long val,unsigned long * addr)
 __asm__ ("movl %0,%%fs:%1"::"r" (val),"m" (*addr));
 }
 
-
+/*
  * Someone who knows GNU asm better than I should double check the followig.
  * It seems to work, but I don't know if I'm doing something subtly wrong.
  * --- TYT, 11/24/91

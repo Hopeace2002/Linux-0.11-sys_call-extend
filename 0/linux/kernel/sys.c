@@ -126,6 +126,30 @@ unsigned int sys_sleep(unsigned int seconds)
 	return 0;
 }
 
+int execve2(const char *path, char * argv[], char * envp[])
+{
+	return 0;
+}
+
+int getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count)
+{
+	return 0;
+}
+
+long getcwd(char * buf, size_t size)
+{
+	return 0;
+}
+
+int  hopeace()
+{
+	return 0;
+}
+
+
+
+
+
 /*
  * Unprivileged users may change the real user id to the effective uid
  * or vice versa.
