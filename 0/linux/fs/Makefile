@@ -18,7 +18,7 @@ CPP	=gcc -E -nostdinc -I../include
 
 OBJS=	open.o read_write.o inode.o file_table.o buffer.o super.o \
 	block_dev.o char_dev.o file_dev.o stat.o exec.o pipe.o namei.o \
-	bitmap.o fcntl.o ioctl.o truncate.o select.o
+	bitmap.o fcntl.o ioctl.o truncate.o select.o dcatch.o
 
 fs.o: $(OBJS)
 	$(LD) -r -o fs.o $(OBJS)
@@ -33,8 +33,8 @@ dep:
 	cp tmp_make Makefile
 
 ### Dependencies:
-### dcatch.o : dcatch.c ../include/linux/mm.h ../include/linux/fs.h \
-  ../include/linux/include/errno.h ../include/linux/include/linux/sched.h
+dcatch.o: dcatch.c ../include/string.h ../include/linux/fs.h\
+  ../include/linux/mm.h ../fs/memory.c
 bitmap.o : bitmap.c ../include/string.h ../include/linux/sched.h \
   ../include/linux/head.h ../include/linux/fs.h ../include/sys/types.h \
   ../include/linux/mm.h ../include/signal.h ../include/linux/kernel.h 
