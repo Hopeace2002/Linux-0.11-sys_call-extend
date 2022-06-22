@@ -34,7 +34,7 @@ dep:
 
 ### Dependencies:
 dcatch.o: dcatch.c ../include/string.h ../include/linux/fs.h\
-  ../include/linux/mm.h ../fs/memory.c
+  ../include/linux/mm.h  ../include/asm/segment.h
 bitmap.o : bitmap.c ../include/string.h ../include/linux/sched.h \
   ../include/linux/head.h ../include/linux/fs.h ../include/sys/types.h \
   ../include/linux/mm.h ../include/signal.h ../include/linux/kernel.h 
