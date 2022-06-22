@@ -92,8 +92,8 @@ extern int sys_uselib();
 extern int sys_execve2();
 extern int sys_getdents();
 extern int sys_hopeace(); // 用来顶替位置的没用
-extern int sys_sleep();
-extern int sys_getcwd();
+extern unsigned int sys_sleep();
+extern long sys_getcwd();
 
 fn_ptr sys_call_table[] = { sys_setup, sys_exit, sys_fork, sys_read,
 sys_write, sys_open, sys_close, sys_waitpid, sys_creat, sys_link,

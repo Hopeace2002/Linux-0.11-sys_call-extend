@@ -225,3 +225,10 @@ int  sys_hopeace()
 }
 ```
 
+修改系统调用总数量
+
+```c
+// kernel/system_call.s
+nr_system_calls = 92  /* 72 */
+```
+
