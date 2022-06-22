@@ -232,3 +232,25 @@ int  sys_hopeace()
 nr_system_calls = 92  /* 72 */
 ```
 
+sleep实现
+
+然后操作getcwd函数
+
+删除kernel/sys.c中的sys_getcwd
+
+并建立新文件
+
+```c
+// fs/dcatch.c
+#include <string.h>
+#include <linux/mm.h>
+#include <linux/fs.h>
+
+
+long sys_getcwd(char * buf, size_t size)
+{
+	return 0;
+}
+```
+
+为v0.1.0版本
