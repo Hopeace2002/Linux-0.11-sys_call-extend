@@ -1,7 +1,9 @@
 #include <string.h>
 #include <linux/mm.h>
 #include <linux/fs.h>
+#include <asm/segment.h>
 #include "../mm/memory.c"
+
 
 #define __GFP_WAIT	0x01
 #define __GFP_IO	0x02
