@@ -2,13 +2,14 @@
 #include <linux/mm.h>
 #include <linux/fs.h>
 #include <asm/segment.h>
-#include "../mm/memory.c"
+#include <linux/sched.h>
 
 
 #define __GFP_WAIT	0x01
 #define __GFP_IO	0x02
 #define __GFP_LOW	0x00
 #define GFP_USER	(__GFP_LOW | __GFP_WAIT | __GFP_IO)
+
 // long sys_getcwd(char * buf, size_t size)
 // {
 //     int error;
