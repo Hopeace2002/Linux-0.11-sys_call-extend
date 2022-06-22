@@ -1,0 +1,19 @@
+1.新的系统调用号定义在../include/unistd.h中。
+
+2.为了在Linux 0.11中顺利进行make，需要在bochs虚拟机中对硬盘作一些调整，如下：
+cd /bin
+mv sh sh.old
+ln bash sh
+
+3.编译
+编译所有文件：
+  make
+
+编译某个文件，如：
+  make execve2
+
+4.测试
+make test
+
+4.清除中间文件
+make clean

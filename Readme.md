@@ -28,6 +28,8 @@ git log --pretty=oneline
 // 也可以输入版本id号具体回退，注意倒退后再想回来就只能通过版本号了
 git reset --hard HEAD^
 git reset --hard 1e5d(id号)
+
+git push origin master 推到github里
 ```
 
 那么试着记录现在的状态到git里吧，然后我们就可以正式开始了
