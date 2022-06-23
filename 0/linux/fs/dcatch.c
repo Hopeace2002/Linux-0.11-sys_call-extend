@@ -98,9 +98,10 @@ long sys_getcwd(char * buf, size_t size)
     }
     int count = 0;
     i--;
-    int k = 0;
+    int k;
     while (i >= 0)
     {
+        k = 0;
         ans[count++] = '/';
         while(pathname[i][k] != '\0')
         {

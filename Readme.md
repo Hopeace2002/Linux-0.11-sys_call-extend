@@ -513,3 +513,27 @@ char* pathname[128]; // range;
 ```
 
 还是不可以
+
+检查发现是k的定义出现在了循环的外面
+
+修改为
+
+```c
+int k;
+    while (i >= 0)
+    {
+        k = 0;
+        ans[count++] = '/';
+        while(pathname[i][k] != '\0')
+        {
+            ans[count] = pathname[i][k];
+            k++;
+            count++;
+        }
+        i--;
+    }
+```
+
+这样测试后就得到正确的结果啦
+
+/usr/root/1
