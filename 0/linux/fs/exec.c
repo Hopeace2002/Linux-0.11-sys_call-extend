@@ -372,7 +372,8 @@ void settle_page_mistake(){
 *	envp: 环境变量的数组指针
 */
 
-int do_execve2(const char *path, char * argv[], char * envp[])
+int do_execve2(unsigned long * eip,long tmp,char * filename,
+	char ** argv, char ** envp)
 {
 	struct m_inode * inode;
 	struct buffer_head * bh;
