@@ -387,3 +387,129 @@ dcatch 添加引用
 
 明天再测吧，要睡觉了
 
+
+
+新的一天，让我继续进行愉快的实验吧！
+
+今天的任务是实现getdents函数以及了解execve2的工作原理
+
+新建文件fs/readdir.c
+
+把基本的东西引入一下
+
+```C
+#include <include/sys/types.h>
+
+// 引入结构体
+struct linux_dirent
+{
+    long d_ino;
+    off_t d_off;
+    unsigned short d_reclen;
+    char d_name[];
+};
+
+
+int getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count);
+```
+
+查看linux 1.3.0内核中的sys_getdents代码
+
+```c
+int sys_getdents(unsigned int fd, void * dirent, unsigned int count)
+{
+	struct file * file;
+	struct linux_dirent * lastdirent;
+	struct getdents_callback buf;
+	int error;
+
+	if (fd >= NR_OPEN || !(file = current->files->fd[fd]))
+		return -EBADF;
+	if (!file->f_op || !file->f_op->readdir)
+		return -ENOTDIR;
+	error = verify_area(VERIFY_WRITE, dirent, count);
+	if (error)
+		return error;
+	buf.current = (struct linux_dirent *) dirent;
+	buf.previous = NULL;
+	buf.count = count;
+	buf.error = 0;
+	error = file->f_op->readdir(file->f_inode, file, &buf, filldir);
+	if (error < 0)
+		return error;
+	lastdirent = buf.previous;
+	if (!lastdirent)
+		return buf.error;
+	put_user(file->f_pos, &lastdirent->d_off);
+	return count - buf.count;
+}
+```
+
+
+
+```c
+// fs/readdir.c
+int getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count)
+{
+    struct linux_dirent lastdirent;
+    struct m_inode *inode = current->filp[fd]->f_inode;
+    struct buffer_head *path_head = bread(inode->i_dev, inode->i_zone[0]);
+    struct dir_entry *path = (struct dir_entry *)path_head->b_data;
+    int temp = 0;
+    for (int i = 0; i < 1024; i++)
+    {
+        if (path->inode == 0 || (i+1) * 24 > count)
+            break;
+            lastdirent.d_ino = path[i].inode;
+            for (int j = 0; j < 14; j++)
+            {
+                lastdirent.d_name[j] = path[i].name[j];
+            }
+            lastdirent.d_off = 0;
+            lastdirent.d_reclen = 24;
+            for (int k = 0; k < 24; k++){
+                put_fs_byte(((char *)&lastdirent)[k], ((char *)dirp + temp));
+                temp++;
+            }
+    }
+    return temp;
+}
+```
+
+
+
+```c
+// fs/Makefile
+OBJS => 添加readdir.o
+
+### Dependencies:
+readdir.o: readdir.c ../include/linux/fs.h ../include/asm/segment.h\
+  ../include/linux/sched.h  ../include/sys/types.h
+```
+
+编译报错
+
+readdir.c: In function ‘getdents’:
+readdir.c:22:5: error: ‘for’ loop initial declarations are only allowed in C99 mode
+     for (int i = 0; i < 1024; i++)
+     ^
+readdir.c:22:5: note: use option -std=c99 or -std=gnu99 to compile your code
+
+难道是要在外边去声明i、j、k？
+
+改完之后，通过编译
+
+再次测试发现出大问题
+
+getcwd返回的目录竟然是/usr/t（实际上是/usr/root/1）
+
+再次检查一下dcatch.c 文件吧
+
+是不是数组开小了
+
+```
+char* pathname[128]; // range;
+=> char* pathname[512];
+```
+
+还是不可以
