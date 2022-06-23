@@ -550,3 +550,15 @@ getdents忘记了
 
 起码不是空的了
 
+找到问题所在了,结构体中的d_name不是空
+
+```c
+struct linux_dirent
+{
+    long d_ino;
+    off_t d_off;
+    unsigned short d_reclen;
+    char d_name[14];
+};
+```
+
