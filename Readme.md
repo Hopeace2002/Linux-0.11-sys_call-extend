@@ -562,3 +562,48 @@ struct linux_dirent
 };
 ```
 
+
+
+实现execve2
+
+在fs/exec.c文件中
+
+建立函数
+
+```c
+int do_execve2(const char *path, char * argv[], char * envp[])
+{
+	return 0;
+}
+```
+
+同时把之前sys.c中的sys_execve2给删掉，避免重复定义
+
+仿照execve系统调用
+
+在kernel/system_call.s中加入
+
+```c
+.align 4
+sys_execve2:
+	lea EIP(%esp),%eax
+	pushl %eax
+	call do_execve2
+	addl $4,%esp
+	ret
+```
+
+do_execve2处理错误之前插入函数
+
+settle_page_mistake()
+
+```c
+void settle_page_mistake(){
+	unsigned long  temp;
+	for (temp = current->start_code; temp<=current->start_code+current->end_data; temp+= 4096){
+		do_no_page_execve2(temp);
+	}
+}
+```
+
+do_no_page_execve2定义在mm/memory.c

@@ -205,6 +205,14 @@ sys_execve:
 	ret
 
 .align 4
+sys_execve2:
+	lea EIP(%esp),%eax
+	pushl %eax
+	call do_execve2
+	addl $4,%esp
+	ret
+
+.align 4
 sys_fork:
 	call find_empty_process
 	testl %eax,%eax
