@@ -130,10 +130,6 @@ int sys_execve2(const char *path, char * argv[], char * envp[])
 	return 0;
 }
 
-int sys_getdents(unsigned int fd, struct linux_dirent *dirp, unsigned int count)
-{
-	return 0;
-}
 
 
 

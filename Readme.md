@@ -537,3 +537,16 @@ int k;
 这样测试后就得到正确的结果啦
 
 /usr/root/1
+
+啊啊啊
+
+getdents忘记了
+
+应该定义为sys_getdents的
+
+同时删掉之前sys.c中定义的sys_getdents，避免重复定义
+
+再次编译测试发现回显了"."open fd:3 getdents fd: 48
+
+起码不是空的了
+
