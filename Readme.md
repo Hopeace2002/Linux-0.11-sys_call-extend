@@ -666,3 +666,19 @@ return -1;
 
 
 
+对sys_getcwd函数进行优化
+
+提高可读性以及健壮性
+
+```c
+if (count < 0)
+    {
+        return NULL;
+    }
+    
+if (i < 0)
+    {
+        return NULL;
+    }
+```
+

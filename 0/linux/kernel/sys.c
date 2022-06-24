@@ -117,7 +117,9 @@ int sys_time(long * tloc)
 	return i;
 }
 
-
+/*
+ * sys_sleep, 睡眠seconds， 成功返回0， 失败返回-1
+ */
 int sys_sleep(long seconds)
 {
 
