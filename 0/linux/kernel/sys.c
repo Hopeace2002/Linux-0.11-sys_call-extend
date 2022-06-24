@@ -144,7 +144,6 @@ int  sys_hopeace()
 
 
 
-
 /*
  * Unprivileged users may change the real user id to the effective uid
  * or vice versa.
