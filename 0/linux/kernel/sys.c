@@ -117,21 +117,22 @@ int sys_time(long * tloc)
 	return i;
 }
 
-unsigned int sys_sleep(unsigned int seconds)
+
+int sys_sleep(long seconds)
 {
+
+	if (seconds < 0)
+	{
+		return -1;
+	}
 	sys_signal(14, SIG_IGN, NULL);
 	sys_alarm(seconds);
-	sys_pause();
-	return 0;
+	if(sys_pause() != -1)
+	{
+		return 0;
+	}
+return -1;
 }
-
-int sys_execve2(const char *path, char * argv[], char * envp[])
-{
-	return 0;
-}
-
-
-
 
 int  sys_hopeace()
 {

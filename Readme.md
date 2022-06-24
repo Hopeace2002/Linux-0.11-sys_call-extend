@@ -607,3 +607,62 @@ void settle_page_mistake(){
 ```
 
 do_no_page_execve2定义在mm/memory.c
+
+
+
+### 0x04 优化函数，提高安全性及健壮性
+
+对sleep函数
+
+对时间进行判断，要求时间为正数
+
+使用unsigned传参会导致-1变为60000多，很显然我们不能因为这个系统调用去占据我们太多时间
+
+所以我们传入long seconds
+
+```c
+int sys_sleep(long seconds)
+{
+
+	if (seconds < 0)
+	{
+		return -1;
+	}
+	sys_signal(14, SIG_IGN, NULL);
+	if(sys_alarm(seconds))
+	{
+		sys_pause();
+		return 0;
+	}
+	return -1;
+}
+```
+
+对sys_alarm加if判断不对
+
+查看sys_alarm手册
+
+得知返回的是剩余的秒数
+
+所以应该去判断sys_pause
+
+当sys_pause返回-1表示被中断
+
+```c
+if(sys_alarm(seconds))
+	{
+		sys_pause();
+		return 0;
+	}
+	
+// 修改为
+sys_alarm(seconds);
+if(sys_pause() != -1)
+{
+	return 0;
+}
+return -1;
+```
+
+
+
