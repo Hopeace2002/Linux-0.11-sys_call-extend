@@ -682,3 +682,17 @@ if (i < 0)
     }
 ```
 
+
+
+对sys_getdents
+
+增加
+
+```c
+// 到结尾返回0
+    if (bytes_num == 24)
+    {
+        return 0;
+    }
+```
+
